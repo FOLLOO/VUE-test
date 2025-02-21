@@ -38,20 +38,23 @@
       </template>
       <template v-slot:filter>
         <Button
+            :disabled="true"
           :image="filter"
           type="foreground"
         />
       </template>
       <template v-slot:sort>
         <Button
+            :disabled="true"
           :image="sort"
           type="foreground"
         />
       </template>
       <template v-slot:extra>
         <Button
-          text="Создать"
-          type="default"
+            :disabled="true"
+            text="Создать"
+            type="default"
         />
       </template>
     </PageHeader>

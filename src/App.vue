@@ -12,7 +12,6 @@ import video from "@/assets/icons/video.svg"
 import logout from '@/assets/icons/log-out.svg'
 import logo from "@/assets/logo.svg"
 import Profile from "@/components/ui/porfiles/Profile.vue";
-import Button from '@/components/ui/bttons/Button.vue'
 import {PROJECT_NAME} from "../utils.js";
 
 const route = useRoute()
@@ -66,7 +65,7 @@ const menuItems = [
   <header class="App-header">
     <div class="wrapper">
       <div class="content">
-        <a class="logo">
+        <a class="logo" href="/">
           <img :src="logo" :alt="PROJECT_NAME"/>
           <h1 class="logo-title">{{ PROJECT_NAME }}</h1>
         </a>
@@ -93,6 +92,7 @@ const menuItems = [
         />
 
         <Link
+            href="/"
             :isActive="false"
             type="outlet"
             text="Выйти"

@@ -72,14 +72,14 @@ export default {
 }
 
 .button {
-  min-height: 2.5rem; /* h-10 */
-  padding: 0.5rem 1rem; /* py-2 px-4 */
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
   display: inline-flex;
   gap: 0.5rem;
   align-items: center;
   color: var(--white);
-  border-radius: var(--rounded-base); /* rounded-md */
-  font-weight: 500; /* font-medium */
+  border-radius: var(--rounded-base);
+  font-weight: bolder;
   transition: all 0.2s ease-in-out ;
   outline: none;
   cursor: pointer;
@@ -87,6 +87,9 @@ export default {
 }
 .button:hover {
   border: 1px solid rgba(55, 97, 243, 1);
+}
+.button:disabled:hover {
+  border: none
 }
 .text{
   display: block;

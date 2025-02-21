@@ -162,6 +162,24 @@ export default {
   overflow-y: scroll;     /* Убираем переполнение, чтобы углы не срезались */
 }
 
+.table-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  /* border: 1px solid #cacaca; */
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  /* border: 3px solid transparent; */
+  background-clip: content-box;
+  background-color: rgba(196, 196, 196, 0.35);
+}
+
+
 table {
   width: 100%;
 }

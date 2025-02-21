@@ -84,7 +84,7 @@ export default {
   gap: 0.5rem;
   align-items: center;
   border-radius: var(--rounded-base); /* rounded-md */
-  font-weight: 500; /* font-medium */
+  font-weight: bolder; /* font-medium */
   transition: all 0.2s ease-in-out ;
   outline: none;
   cursor: pointer;
