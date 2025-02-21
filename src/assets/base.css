@@ -1,0 +1,133 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+    --vt-c-white: #ffffff;
+    --vt-c-white-soft: #f8f8f8;
+    --vt-c-white-mute: #f2f2f2;
+
+    --vt-c-black: #181818;
+    --vt-c-black-soft: #222222;
+    --vt-c-black-mute: #282828;
+
+    --vt-c-indigo: #2c3e50;
+
+    --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+    --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+    --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+    --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+    --vt-c-text-light-1: var(--vt-c-indigo);
+    --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+    --vt-c-text-dark-1: var(--vt-c-white);
+    --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+    /*TEXT*/
+    --text-s: 0.5rem; /* 12px */
+    --text-xs: 0.75rem; /* 12px */
+    --text-sm: 0.875rem; /* 14px */
+    --text-base: 1rem; /* 16px */
+    --text-lg: 1.125rem; /* 18px */
+    --text-xl: 1.25rem; /* 20px */
+    --text-2xl: 1.5rem; /* 24px  */
+    --text-3xl: 1.875rem; /* 30px */
+    --text-4xl: 2rem; /* 30px */
+    --text-5xl: 2.25rem;
+    --text-7xl: 2.75rem;
+    --text-8xl: 6rem; /* 96px  */
+
+    --rounded-md: .5rem;
+    --rounded-sm: .75rem;
+    --rounded-base: 1rem;
+
+    --t-c-description: #828282;
+    --tw-500: 500;
+    --tw-700: 700;
+    --tw-normal: normal;
+    --tf-LATO: 'Inter', sans-serif;
+
+    --base-p: 0.5rem 1rem; /* py-2 px-4 */
+
+    --input-bg-color: white;
+    --input-border-color: #E0E0E0;
+    --input-text-color: black;
+    --input-placeholder-color: #BEBEBE;
+
+    --b-otlet-color: white;
+    --b-ghostHover-color: #f4f4f5;
+
+    --white: white;
+    --black: black;
+
+    --light-blue: #AFBFF5;
+    --light-orange: #FFDAA1;
+    --light-red: #C89191;
+    --light-green: #91C893;
+
+    --accent: rgba(55, 97, 243, 1);
+    --foregroound: rgba(244, 244, 244, 1);
+    --accent-foreground: #dddddd;
+    --end-foreground: #333333;
+    --red: #ff4444
+}
+
+/* semantic color variables for this project */
+:root {
+    --color-background: var(--white);
+    --color-background-soft: var(--foregroound);
+    --color-background-mute: var(--accent-foreground);
+
+    --color-border: var(--input-border-color);
+    --color-border-hover: var(--b-ghostHover-color);
+
+    --color-heading: var(--black);
+    --color-text: var(--end-foreground);
+
+    --section-gap: 160px;
+}
+
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: normal;
+}
+
+#app{
+    width: 100%;
+    display: flex;
+    background: #F4F4F8;
+}
+
+.page{
+    padding: 1rem 2rem;
+    margin: 0 1rem;
+    border-radius: var(--rounded-base);
+}
+
+body {
+    min-height: 100vh;
+    color: var(--color-text);
+    background: var(--color-background);
+    transition: color 0.5s,
+    background-color 0.5s;
+    line-height: 1.6;
+    font-family: Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+    font-size: 15px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
