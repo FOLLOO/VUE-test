@@ -62,6 +62,8 @@ const menuItems = [
 </script>
 
 <template>
+  <label for="cheese" class="menu-label"> < </label>
+  <input type="checkbox" class="menu" name="cheese" id="cheese" @input="console.log('yjhhfgh')" />
   <header class="App-header">
     <div class="wrapper">
       <div class="content">
@@ -69,6 +71,7 @@ const menuItems = [
           <img :src="logo" :alt="PROJECT_NAME"/>
           <h1 class="logo-title">{{ PROJECT_NAME }}</h1>
         </a>
+        
         <nav class="nav">
           <RouterLink
               v-for="(item, index) in menuItems"
@@ -108,6 +111,41 @@ const menuItems = [
 </template>
 
 <style scoped>
+
+/* .sidebar_input[name="check-in"]{
+    position: absolute;
+    visibility: hidden;
+} */
+
+.menu-label{
+  background-color: black;
+  border-radius: 100%;
+  width: 1.5rem;
+  padding: 0 .5rem;
+  font-size: var(--text-sm);
+  height: 1.5rem;
+  position: relative;
+  color: white;
+  left: 15vw;
+  top: 3vh;
+}
+
+
+.menu:not(:checked) + .App-header{
+    max-width: 15vw;
+    transition: all .5s ease;
+}
+
+.menu:checked ~ .menu-label{
+  left: 5vw;
+}
+.menu:checked + .App-header {
+    max-width: 1vw;
+    transition: all .5s ease;
+    visibility: hidden;
+  }
+
+
 .footer {
   display: flex;
   flex-direction: column;
