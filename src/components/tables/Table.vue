@@ -1,30 +1,36 @@
 <script>
-
   import data from '@/data.json'
   import Status from "@/components/ui/status/Status.vue";
   import Search from "@/components/ui/inputs/Search.vue";
   import Button from "@/components/ui/bttons/Button.vue";
 
 export default {
-  props:{
+  props: {
     search: {
       type: String,
     }
   },
-  components: {Status, Search, Button},
+  components: { Status, Search, Button },
   data() {
     return {
       data,
       pageSize: 10,
       currentPage: 1,
+      sortColumn: null, 
+      sortDirection: 'asc', 
     };
   },
   computed: {
     paginatedData() {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
-      return this.data.sessions.filter(session =>
-          session.module.toLowerCase().includes(this.search.toLowerCase())).slice(start, end);
+
+      // Применение сортировки к данным
+      const sortedData = this.sortData(this.data.sessions);
+
+      return sortedData.filter(session =>
+        session.module.toLowerCase().includes(this.search.toLowerCase())
+      ).slice(start, end);
     },
     totalPages() {
       return Math.ceil(this.data.sessions.length / this.pageSize);
@@ -37,13 +43,13 @@ export default {
       }
     },
     setPage(page) {
-        this.currentPage = page;
+      this.currentPage = page;
     },
     shouldShowEllipsis(index) {
       return (index === 1 && this.currentPage > 3) ||
-          (index === this.totalPages - 2 && this.currentPage < this.totalPages - 2);
+        (index === this.totalPages - 2 && this.currentPage < this.totalPages - 2);
     },
-    sessionSwitch(props){
+    sessionSwitch(props) {
       switch (props.name) {
         case "accreditation":
           return "Аккредитация"
@@ -52,26 +58,24 @@ export default {
         case "examination":
           return "Экзамен"
         default: return "Пара"
-        // case ""
       }
     },
-    returnRooms(props){
+    returnRooms(props) {
       let result = "";
-      for(let item of props){
-        if(item.name.includes("Комната")) result += item.name + " ";
+      for (let item of props) {
+        if (item.name.includes("Комната")) result += item.name + " ";
         else result += "Комната " + item.name + " ";
-
       }
       return result
     },
-    returnGroup(props){
+    returnGroup(props) {
       let result = "";
-      for(let item of props){
+      for (let item of props) {
         result += item.name + " "
       }
       return result;
     },
-    returnTimes(start, end){
+    returnTimes(start, end) {
       let r_start = new Date(start);
       let r_end = new Date(end);
 
@@ -81,51 +85,69 @@ export default {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-        }) + "-" + r_end.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      }) + "-" + r_end.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+    },
+    sortData(data) {
+      if (this.sortColumn === null) return data;
+
+      return data.sort((a, b) => {
+        const aValue = a[this.sortColumn];
+        const bValue = b[this.sortColumn];
+
+        if (aValue < bValue) return this.sortDirection === 'asc' ? -1 : 1;
+        if (aValue > bValue) return this.sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+    },
+    sortBy(column) {
+      if (this.sortColumn === column) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortColumn = column;
+        this.sortDirection = 'asc';
+      }
     }
   }
 };
 </script>
 
-
 <template>
   <div>
     <div :class="$style['table-wrapper']">
-      <table >
+      <table>
         <thead :class="$style['table_head']">
           <tr>
-            <th>Дата и время</th>
-            <th>Статус</th>
-            <th>Название учебного модуля</th>
-            <th>Тип сессии</th>
-            <th>Комната</th>
-            <th>Группа</th>
+            <th @click="sortBy('start')"> Дата и время</th>
+            <th @click="sortBy('status.name')">Статус</th>
+            <th @click="sortBy('module')">Название учебного модуля</th>
+            <th @click="sortBy('type')">Тип сессии</th>
+            <th @click="sortBy('rooms')">Комната</th>
+            <th @click="sortBy('groups')">Группа</th>
           </tr>
         </thead>
         <tbody>
-        <tr v-for="(item) in paginatedData" :key="item.id">
-          <td style="min-width: 15rem">{{returnTimes(item.start, item.end) }}</td>
-          <td>
-            <Status
-              :type="item.status.name" />
-          </td>
-          <td>{{ item.module }}</td>
-          <td>{{sessionSwitch(item.type)}}</td>
-          <td>{{returnRooms(item.rooms) }}</td>
-          <td>{{returnGroup(item.groups) }}</td>
-        </tr>
+          <tr v-for="(item) in paginatedData" :key="item.id">
+            <td style="min-width: 15rem">{{ returnTimes(item.start, item.end) }}</td>
+            <td>
+              <Status :type="item.status.name" />
+            </td>
+            <td>{{ item.module }}</td>
+            <td>{{ sessionSwitch(item.type) }}</td>
+            <td>{{ returnRooms(item.rooms) }}</td>
+            <td>{{ returnGroup(item.groups) }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <div :class="$style['pagination']" >
+    <div :class="$style['pagination']">
       <Button type="outlet" @click="changePage(currentPage - 1)" :disabled="currentPage === 1" text="<"></Button>
-      <span  v-for="(item, index) in paginatedData">
+      <span v-for="(item, index) in paginatedData">
         <Button
-            v-show="(index + 1 >= currentPage - 1) && (index + 1 <= currentPage + 1) || (index === 0) || (index === totalPages - 1)"
-            :type="(index + 1) === currentPage ? 'foreground' : 'outlet'"
-            :isActive="(index + 1) === currentPage"
-            @click="setPage(index + 1)" :text="index + 1"></Button>
+          v-show="(index + 1 >= currentPage - 1) && (index + 1 <= currentPage + 1) || (index === 0) || (index === totalPages - 1)"
+          :type="(index + 1) === currentPage ? 'foreground' : 'outlet'"
+          :isActive="(index + 1) === currentPage"
+          @click="setPage(index + 1)" :text="index + 1"></Button>
         <span v-if="shouldShowEllipsis(index)">...</span>
       </span>
       <Button type="outlet" @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages" text=">"></Button>
@@ -134,7 +156,24 @@ export default {
 </template>
 
 
+
 <style module>
+
+
+.active {
+  font-weight: bold;
+  opacity: 0.7;; 
+}
+
+.unnacti::after {
+  content: '↑'; 
+}
+
+.desc::after {
+  content: '↓'; 
+}
+
+
 .pagination{
   display: flex;
   justify-content: start;
